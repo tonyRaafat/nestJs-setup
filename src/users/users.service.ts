@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreateUserDto, Role } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './users.repository';
 
@@ -7,6 +7,9 @@ import { UserRepository } from './users.repository';
 export class UsersService {
   constructor(private userRepository: UserRepository) {}
   create(createUserDto: CreateUserDto) {
+    if (createUserDto.role !== Role.user && createUserDto.role !== Role.admin) {
+      throw new BadRequestException();
+    }
     return this.userRepository.create(createUserDto);
   }
 

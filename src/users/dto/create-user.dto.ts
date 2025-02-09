@@ -5,5 +5,10 @@ export class CreateUserDto {
 
   hobbies: string[];
 
-  role: string;
+  role: Role;
+}
+
+export enum Role {
+  admin = 'Admin',
+  user = 'User',
 }

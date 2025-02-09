@@ -2,11 +2,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 export type UserDocument = User & Document;
 
-enum Role {
-  admin = 'admin',
-  user = 'user',
-}
-
 @Schema()
 export class User {
   @Prop({ required: true })
@@ -18,7 +13,7 @@ export class User {
   @Prop([String])
   hobbies: string[];
 
-  @Prop(Role)
+  @Prop()
   role: string;
 }
 
