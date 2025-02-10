@@ -30,9 +30,13 @@ export abstract class EntityRepository<T extends Document> {
     return this.entityModel.find(filterQuery, projection).exec();
   }
 
-  async create(createEntityModel: unknown) {
-    const entity = new this.entityModel(createEntityModel);
-    return entity.save();
+  async create(createEntityModel: unknown): Promise<T | T[]> {
+    if (Array.isArray(createEntityModel)) {
+      return this.entityModel.insertMany(createEntityModel);
+    } else {
+      const entity = new this.entityModel(createEntityModel);
+      return entity.save();
+    }
   }
 
   async findOneAndUpdate(
